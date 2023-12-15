@@ -1,0 +1,4 @@
+fileignoreconfig:
+- filename: sample.csv
+  checksum: 6b63c7e9e7e2d1acf7e0f3a510f086c9cb728907fa3ca535ca04600e5df41e5f
+version: ""
