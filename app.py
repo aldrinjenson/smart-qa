@@ -2,35 +2,38 @@ from src.constants import TABLE_NAME, DATABASE_NAME
 import streamlit as st
 import pandas as pd
 import sqlite3
-from src.sql_utils import run_query
-from src.llm_utils import get_sql_for, get_nlp_result_for
+from src.sql_utils import respond_with_sql_analysis
 from src.streamlit_utils import cleanup
 from src.lida_utils import respond_with_lida_analysis
 
-conn = sqlite3.connect(DATABASE_NAME) 
+conn = sqlite3.connect(DATABASE_NAME)
 cleanup()
 
 
-# uploaded_file = st.file_uploader("Choose a CSV file", type=["CSV"])
-uploaded_file = "data/data.csv"
+uploaded_file = st.file_uploader("Choose a CSV of JSON file", type=["csv", "json"])
+# uploaded_file = "data/data.csv"
+# uploaded_file = "sample.csv"
 if uploaded_file is None:
-    st.write("Please upload a valid CSV file ")
+    st.write("Please upload a valid CSV or JSON file ")
     exit()
 
-df = pd.read_csv(uploaded_file)
-first_few_entries = df.head(2).to_string()
+# file_extension = "." + uploaded_file.split(".")[1]
+file_extension = "." + uploaded_file.name.split(".")[1]
+print(file_extension)
+df = None
+if file_extension.lower() == ".csv":
+    df = pd.read_csv(uploaded_file)
+elif file_extension.lower() == ".json":
+    df = pd.read_json(uploaded_file)
+else:
+    print("Invalid file type!")
+    exit(0)
+
+print(df)
+
 st.subheader("Data")
 st.write(df)
 
-df.to_sql(TABLE_NAME, conn, if_exists='replace', index=False)
-
-
-table_info = run_query(conn, f"PRAGMA table_info({TABLE_NAME})")
-filtered_info = [(col[1], col[2]) for col in table_info]
-columns = ["Column Name", "Data Type"]
-df_table_info = pd.DataFrame(filtered_info, columns=columns)
-print("df info: ", df_table_info)
-table_info_string = df_table_info.to_string(index=False)
 
 user_query = st.text_input(
     "Enter your query",
@@ -40,14 +43,5 @@ user_query = st.text_input(
 if not len(user_query):
     exit()
 
-respond_with_lida_analysis(uploaded_file, user_query)
-
-# sql_query = get_sql_for(user_query, table_info_string, first_few_entries)
-
-# db_result = run_query(conn, sql_query)
-# print("db res = ", db_result)
-# st.write(db_result)
-# nlp_result = get_nlp_result_for(user_query,sql_query, db_result)
-
-# st.write(nlp_result)
-
+# respond_with_lida_analysis(df, user_query)
+respond_with_sql_analysis(df, conn, user_query)
