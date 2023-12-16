@@ -1,0 +1,2 @@
+TABLE_NAME = "tb"
+DATABASE_NAME = "db.db"
