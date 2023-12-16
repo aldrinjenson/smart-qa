@@ -17,10 +17,20 @@ if uploaded_file is None:
     exit()
 
 df = pd.read_csv(uploaded_file)
-st.subheader("Head data")
-st.write(df.head())
+first_few_entries = df.head(2)
+print(first_few_entries)
+st.subheader("Data")
+st.write(df)
 
 df.to_sql(TABLE_NAME, conn, if_exists='replace', index=False)
+
+
+table_info = run_query(conn, f"PRAGMA table_info({TABLE_NAME})")
+filtered_info = [(col[1], col[2]) for col in table_info]
+columns = ["Column Name", "Data Type"]
+df_table_info = pd.DataFrame(filtered_info, columns=columns)
+print("df info: ", df_table_info)
+table_info_string = df_table_info.to_string(index=False)
 
 user_query = st.text_input(
     "Enter your query",
@@ -28,15 +38,17 @@ user_query = st.text_input(
 )
 
 print(user_query)
+if not len(user_query):
+    exit()
 
 
-# sql_query = f"SELECT AVG(cc_num) FROM {TABLE_NAME}"  
 
-table_info = run_query(conn, f"PRAGMA table_info({TABLE_NAME})")
-table_info_string = pd.DataFrame(table_info, columns=["Column Index","Column Name", "Data Type", "Nullable", "Default Value", "Primary Key"]).to_string(index=False)
-sql_query = get_sql_for(user_query, table_info_string)
+
+
+sql_query = get_sql_for(user_query, table_info_string, first_few_entries)
 
 db_result = run_query(conn, sql_query)
+print("db res = ", db_result)
 nlp_result = get_nlp_result_for(user_query, db_result)
 print(type(nlp_result))
 

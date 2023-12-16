@@ -2,6 +2,7 @@
 import sqlite3
 
 def run_query(conn, query):
+    query = query.replace('\\', '')
     try:
         cursor = conn.execute(query)
         result = cursor.fetchall()
