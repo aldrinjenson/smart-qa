@@ -1,17 +1,13 @@
-from src.constants import TABLE_NAME
+from src.constants import TABLE_NAME, LLM_MODEL
 from src.llm_models import execute_with_openai, execute_with_ollama
-import json
 
-
-MODEL="mistral"
-# MODEL="openai"
 
 def execute_with_llm(query):
     print({"Query: ", query})
 
-    if MODEL == 'openai':
+    if LLM_MODEL == 'openai':
         response = execute_with_openai(query)
-    elif MODEL == 'mistral':
+    elif LLM_MODEL == 'mistral':
         response = execute_with_ollama(query)
     else:
         return Exception("Invalid model specified")

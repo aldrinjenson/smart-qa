@@ -5,6 +5,7 @@ import sqlite3
 from src.sql_utils import run_query
 from src.llm_utils import get_sql_for, get_nlp_result_for
 from src.streamlit_utils import cleanup
+from src.lida_utils import respond_with_lida_analysis
 
 conn = sqlite3.connect(DATABASE_NAME) 
 cleanup()
@@ -39,14 +40,14 @@ user_query = st.text_input(
 if not len(user_query):
     exit()
 
+respond_with_lida_analysis(uploaded_file, user_query)
 
+# sql_query = get_sql_for(user_query, table_info_string, first_few_entries)
 
-sql_query = get_sql_for(user_query, table_info_string, first_few_entries)
+# db_result = run_query(conn, sql_query)
+# print("db res = ", db_result)
+# st.write(db_result)
+# nlp_result = get_nlp_result_for(user_query,sql_query, db_result)
 
-db_result = run_query(conn, sql_query)
-print("db res = ", db_result)
-st.write(db_result)
-nlp_result = get_nlp_result_for(user_query,sql_query, db_result)
-
-st.write(nlp_result)
+# st.write(nlp_result)
 

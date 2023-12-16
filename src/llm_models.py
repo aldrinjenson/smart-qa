@@ -1,11 +1,15 @@
 import requests
 import json
-from openai import OpenAI
+# from openai import OpenAI
 from src.constants import OPENAI_API_KEY
 
+
+def OpenAI ():
+  return {"api_key":"sdfds"}
+
 print(OPENAI_API_KEY)
-client = OpenAI()
-client.api_key = OPENAI_API_KEY
+client = OpenAI() 
+client["api_key"] = OPENAI_API_KEY
 
 def execute_with_ollama(query):
     payload = {
