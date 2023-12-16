@@ -1,35 +1,22 @@
 from src.constants import TABLE_NAME
-
-
-import requests
+from src.llm_models import execute_with_openai, execute_with_ollama
 import json
 
-def execute_with_ollama(query):
+
+MODEL="mistral"
+# MODEL="openai"
+
+def execute_with_llm(query):
     print({"Query: ", query})
-    payload = {
-        "model": "mistral",
-        "format": "json",
-        "stream": False,
-        "messages": [
-            {"role": "user", "content": query}
-        ]
-    }
 
-    payload_json = json.dumps(payload)
-    url = 'http://localhost:11434/api/chat'
+    if MODEL == 'openai':
+        response = execute_with_openai(query)
+    elif MODEL == 'mistral':
+        response = execute_with_ollama(query)
+    else:
+        return Exception("Invalid model specified")
+    return response
 
-    try:
-        response = requests.post(url, data=payload_json)
-
-        if response.status_code == 200:
-            response_data = response.json()
-            return response_data['message']['content']
-        else:
-            print(f"LLM Request failed with status code {response.status_code}")
-            return None
-    except requests.RequestException as e:
-        print(f"Request exception: {e}")
-        return None
 
 def get_sql_for(user_query, table_info_string, first_few_entries ):
     llm_query= f"""
@@ -53,9 +40,8 @@ def get_sql_for(user_query, table_info_string, first_few_entries ):
         "error": null
     }}
     """
-    llm_response = execute_with_ollama(llm_query)
+    llm_response = execute_with_llm(llm_query)
 
-    llm_response = json.loads(llm_response)
     print(llm_response["sql"])
     return llm_response["sql"]
 
@@ -66,9 +52,9 @@ def get_nlp_result_for(user_query, sql_query, db_result):
     After running an SQL query of {sql_query}, the result of {db_result}  was obtained. 
     Based on this, in natural language answer the question: {user_query}. 
     If you cannot answer based on this, directly say so. Don't mention anything about SQL. 
-    Directly answer the user to the point.
+    Directly answer the user to the point Output in the following json format
+    {{response: <your response>}}.
 """
-    nlp_result = execute_with_ollama(llm_query)
+    nlp_result = execute_with_llm(llm_query)
     print(nlp_result)
-    nlp_result = json.loads(nlp_result)
     return nlp_result

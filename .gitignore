@@ -4,3 +4,4 @@ data/*
 *.db
 *.csv
 *__pycache__
+.env

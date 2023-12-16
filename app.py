@@ -1,7 +1,7 @@
+from src.constants import TABLE_NAME, DATABASE_NAME
 import streamlit as st
 import pandas as pd
 import sqlite3
-from src.constants import TABLE_NAME, DATABASE_NAME
 from src.sql_utils import run_query
 from src.llm_utils import get_sql_for, get_nlp_result_for
 from src.streamlit_utils import cleanup
@@ -17,7 +17,7 @@ if uploaded_file is None:
     exit()
 
 df = pd.read_csv(uploaded_file)
-first_few_entries = df.head(4).to_string()
+first_few_entries = df.head(2).to_string()
 st.subheader("Data")
 st.write(df)
 
