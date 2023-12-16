@@ -11,18 +11,14 @@ Smart QA is a versatile Streamlit-based web application designed for efficient d
 
 ## Demo
 
-[![Demo 1](demo/output1.mp4)](demo/output1.mp4)
-[![Visualisation Demo](demo/visualisation.mp4)](demo/visualisation.mp4)
 
-<video width="320" height="240" controls>
-  <source src="demo/sql_based.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
 
-<video width="320" height="240" controls>
-  <source src="demo/visualisation.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
+https://github.com/aldrinjenson/smart-qa/assets/53407417/12142e98-76c6-4ca5-ba70-59db5dd57e5f
+
+
+https://github.com/aldrinjenson/smart-qa/assets/53407417/f74ffdaa-2c2b-4554-9c4f-88a89c7dd400
+
 
 ## Installation
 
