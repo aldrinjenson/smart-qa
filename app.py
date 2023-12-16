@@ -17,8 +17,7 @@ if uploaded_file is None:
     exit()
 
 df = pd.read_csv(uploaded_file)
-first_few_entries = df.head(2)
-print(first_few_entries)
+first_few_entries = df.head(4).to_string()
 st.subheader("Data")
 st.write(df)
 
@@ -37,11 +36,8 @@ user_query = st.text_input(
     placeholder="Eg: Which merchant has the maximum transactions and by how many?",
 )
 
-print(user_query)
 if not len(user_query):
     exit()
-
-
 
 
 
@@ -49,8 +45,8 @@ sql_query = get_sql_for(user_query, table_info_string, first_few_entries)
 
 db_result = run_query(conn, sql_query)
 print("db res = ", db_result)
-nlp_result = get_nlp_result_for(user_query, db_result)
-print(type(nlp_result))
+st.write(db_result)
+nlp_result = get_nlp_result_for(user_query,sql_query, db_result)
 
 st.write(nlp_result)
 
