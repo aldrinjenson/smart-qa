@@ -1,6 +1,6 @@
 # Smart QA
 
-Smart QA is a versatile Streamlit-based web application designed for efficient data analysis and visualization. With support for various data formats such as CSV, Excel, and JSON, this tool empowers users to extract valuable insights seamlessly.
+Streamlit-based web application designed for efficient data analysis and visualization. With support for various data formats such as CSV, Excel, and JSON, this tool empowers users to extract valuable insights seamlessly.
 
 ## Features
 
@@ -11,14 +11,9 @@ Smart QA is a versatile Streamlit-based web application designed for efficient d
 
 ## Demo
 
-
-
-
 https://github.com/aldrinjenson/smart-qa/assets/53407417/12142e98-76c6-4ca5-ba70-59db5dd57e5f
 
-
 https://github.com/aldrinjenson/smart-qa/assets/53407417/f74ffdaa-2c2b-4554-9c4f-88a89c7dd400
-
 
 ## Installation
 
@@ -27,7 +22,7 @@ To install Smart QA, follow these steps:
 1. Clone the repository: `git clone https://github.com/yourusername/smart-qa.git`
 2. Navigate to the project folder: `cd smart-qa`
 3. Install dependencies: `pip install -r requirements.txt`
-4. Create a .env file similar to .env.example
+4. Create a `.env` file similar to `.env.example`
 
 ## Usage
 
@@ -48,7 +43,3 @@ Smart QA is built using [Streamlit](https://streamlit.io/) and integrates with [
 ## Contributions
 
 Contributions welcome : )
-
-## License
-
-Smart QA is licensed under the [MIT License](LICENSE).
