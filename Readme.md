@@ -39,6 +39,7 @@ Smart QA is built using [Streamlit](https://streamlit.io/) and integrates with [
 - **Anomaly Detection**: Implement features to detect and highlight anomalies within the data.
 - **Integration with GPT-4-V**: Connect with GPT-4-V to leverage advanced inference capabilities, especially when dealing with graphical data.
 - Dockerise the application
+- Add function calling to decide between sql based and LIDA based approaches
 
 ## Contributions
 
